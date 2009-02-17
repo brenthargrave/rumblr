@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = %q{2009-02-17}
   s.description = %q{Ruby client for the Tumblr API}
   s.email = %q{brent.hargrave@gmail.com}
-  s.files = ["LICENSE.rdoc", "README.rdoc", "VERSION.yml", "lib/rumblr.rb", "spec/rumblr_spec.rb", "spec/spec_helper.rb"]
+  s.files = ["LICENSE.rdoc", "README.rdoc", "VERSION.yml", "lib/rumblr", "lib/rumblr/client.rb", "lib/rumblr/post.rb", "lib/rumblr/resource.rb", "lib/rumblr/tumblelog.rb", "lib/rumblr/user.rb", "lib/rumblr.rb", "spec/rumblr", "spec/rumblr/client_spec.rb", "spec/rumblr/post_spec.rb", "spec/rumblr/tumblelog_spec.rb", "spec/rumblr/user_spec.rb", "spec/spec_helper.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/jamescallmebrent/rumblr}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
