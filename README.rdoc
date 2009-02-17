@@ -1,0 +1,66 @@
+= Rumblr
+
+Rumblr is a Ruby client for http://www.tumblr.com XML API.  It currently only provides read functionality; you can read User, Tumblelog and Post data.
+
+= Overview
+
+Rumblr maps the Tumblr API 'authenticate' and 'read' calls.  User, Tumblelog and Post models have attributes provided by the API, as well as some convenience methods for common tasks.
+
+Please read Tumblr's official documentation (http://tumblr.com/api/) to learn more the API.
+
+
+== Dependencies
+
+* Ruby >= 1.8.6 (not tested with previous versions)
+* libxml-ruby >= 0.8.3
+
+
+== Download and Installation
+
+RubyGems[http://rubyforge.org/projects/rubygems/] is the preferred install method.
+To get the latest version, simply type the following instruction into your command prompt:
+
+  $ sudo gem install jamescallmebrent-rumblr -s http://gems.github.com
+
+
+== Getting Started
+
+In order to use this library you need a valid Tumblr account.
+Go to http://tumblr.com and register for a new account if you don't already have one.
+
+
+=== Sample usage:
+
+  require 'rumblr'
+  include Rumblr
+  
+  user = User.login({:email => 'name@domain.com', :password => 'pass'})
+  
+  user.tumblelogs.each do |log|
+    puts log.name  # 'the tumblelogger'
+    puts log.type  # 'public'
+    puts log.url   # 'http://tumblelogger.tumblr.com/'
+    puts
+  end
+  
+  tumblelog = user.primary_tumblelog
+  
+  tumblelog.posts.each do |post|
+    puts post.type  # 'quote'
+    puts post.url   # 'http://tumblelogger.tumblr.com/post/12345/my-first-tumblr-post'
+  end
+
+
+== Credits
+
+Author:: {Brent Hargrave}[http://brenthargrave.info/] <brent.hargrave@gmail.com>
+
+
+== FeedBack and Bug reports
+
+Please email {Brent Hargrave}[mailto:brent.hargrave@gmail.com] with any questions or feedback.
+
+
+== License
+
+Copyright (c) 2009 Brent Hargrave. Rumblr is released under the MIT license.
