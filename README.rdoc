@@ -4,9 +4,9 @@ Rumblr is a Ruby client for http://www.tumblr.com XML API.  It currently only pr
 
 = Overview
 
-Rumblr maps the Tumblr API 'authenticate' and 'read' calls.  User, Tumblelog and Post models have attributes provided by the API, as well as some convenience methods for common tasks.
+Rumblr maps the Tumblr API 'authenticate' and 'read' calls.  User, Tumblelog and Post models have the attributes provided by the API, as well as some convenience methods for common tasks.
 
-Please read Tumblr's official documentation (http://tumblr.com/api/) to learn more the API.
+Please read Tumblr's official documentation (http://tumblr.com/api/) to learn more about the API.
 
 
 == Dependencies
