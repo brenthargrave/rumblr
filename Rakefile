@@ -3,12 +3,15 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
+    summary = %Q{Ruby client for the Tumblr API}
+
     s.name = "rumblr"
-    s.summary = %Q{Ruby client for the Tumblr API}
+    s.summary = summary
     s.email = "brent.hargrave@gmail.com"
     s.homepage = "http://github.com/jamescallmebrent/rumblr"
-    s.description = "TODO"
+    s.description = summary
     s.authors = ["Brent Hargrave"]
+    s.add_dependency('libxml-ruby', '>= 0.8.3')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
