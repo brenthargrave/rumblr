@@ -53,6 +53,7 @@ Go to http://tumblr.com and register for a new account if you don't already have
   post = RegularPost.new(:title => "Post Title", :body => "Just a regular post!")
   Client.instance.write(post, {:email => 'name@domain.com', :password => 'pass'})
 
+
 == License
 
 Copyright (c) 2009 Brent Hargrave. Rumblr is released under the MIT license.
