@@ -12,8 +12,12 @@ def mock_successful(request)
   }
   
   @client = Rumblr::Client.instance
-  # yes, this is cheating, but for now just concerned that xml is parsed right
-  @client.stub!(:complete_request).and_yield(responses_to[request])
+  if request == :authenticated_write
+    @client.stub!(:complete_request).and_return(responses_to[request])
+  else
+    # yes, this is cheating, but for now just concerned that xml is parsed right
+    @client.stub!(:complete_request).and_yield(responses_to[request])
+  end
 end
 
 def successful_authenticate_xml
@@ -98,8 +102,5 @@ def successful_authenticated_read_xml
 end
 
 def successful_authenticated_write_xml
-  response = <<-EOF
-    <?xml version="1.0" encoding="UTF-8"?>
-  EOF
-  response.strip!
+  "10001"
 end

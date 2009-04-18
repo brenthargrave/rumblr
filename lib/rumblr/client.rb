@@ -52,16 +52,8 @@ module Rumblr
           inner_attrs.delete(:tag)
           post_attrs.merge!(inner_attrs)
           # turn attributes into proper model
-          klass = case post_attrs[:type]
-                  when 'regular'      then RegularPost
-                  when 'photo'        then PhotoPost
-                  when 'quote'        then QuotePost
-                  when 'link'         then LinkPost
-                  when 'conversation' then ConversationPost
-                  when 'video'        then VideoPost
-                  when 'audio'        then AudioPost
-                  else raise          'unknown post type'
-                  end
+          klass = Rumblr.const_get(Post::TYPES[post_attrs[:type]])
+          raise 'unknown post type' unless klass
           post = klass.new(post_attrs)
           array << post
           array
@@ -73,6 +65,16 @@ module Rumblr
         tumblelog = Tumblelog.new(tumblelog_attrs)
       end
       return tumblelog, posts
+    end
+    
+    def write(post, creds)
+      raise(ArgumentError) unless post && post.is_a?(Post)
+      raise(ArgumentError) unless creds
+      uri = URI::HTTP.build(:path => "/api/write")
+      request = Net::HTTP::Post.new(uri.request_uri, DEFAULT_HEADER)
+      request.set_form_data(creds.merge(:type => Post::TYPES.invert[post.class]).merge(post.attribute_hash))
+      request_url_host = URI.parse(uri.request_uri).host
+      complete_request(request)
     end
     
     

@@ -20,6 +20,10 @@ module Rumblr
       Post.new.should respond_to(:public?)
     end
     
+    it 'should provide a hash of attributes and values for API' do
+      Post.new.should respond_to(:attribute_hash)
+    end
+    
   end
   
 end

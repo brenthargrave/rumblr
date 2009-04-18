@@ -108,4 +108,38 @@ module Rumblr
     
   end
   
+  describe Client, "writing to a public tumblelog" do
+    
+    before(:each) do
+      mock_successful(:authenticated_read)
+      @tumblelog, posts = @client.read( :url => 'http://dummylog.tumblr.com/', 
+                                        :email => 'valid',
+                                        :password => 'valid' )
+      mock_successful(:authenticated_write)
+    end
+    
+    it 'should raise an ArgumentError without post' do
+      lambda do
+        @client.write(nil, {:email => 'valid', :password => 'valid'})
+      end.should raise_error(ArgumentError)
+    end
+    
+    it 'should raise an ArgumentError if post is incorrect class' do
+      lambda do
+        @client.write("", {:email => 'valid', :password => 'valid'})
+      end.should raise_error(ArgumentError)
+    end
+    
+    it 'should raise an ArgumentError without creds' do
+      lambda do
+        @client.write(Rumblr::Post.new, nil)
+      end.should raise_error(ArgumentError)
+    end
+    
+    it 'should return an id' do
+      @client.write(Rumblr::Post.new, {:email => 'valid', :password => 'valid'}).should == "10001"
+    end
+    
+  end
+  
 end
