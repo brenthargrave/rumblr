@@ -50,16 +50,8 @@ Go to http://tumblr.com and register for a new account if you don't already have
     puts post.url   # 'http://tumblelogger.tumblr.com/post/12345/my-first-tumblr-post'
   end
 
-
-== Credits
-
-Author:: {Brent Hargrave}[http://brenthargrave.info/] <brent.hargrave@gmail.com>
-
-
-== FeedBack and Bug reports
-
-Please email {Brent Hargrave}[mailto:brent.hargrave@gmail.com] with any questions or feedback.
-
+  post = RegularPost.new(:title => "Post Title", :body => "Just a regular post!")
+  Client.instance.write(post, {:email => 'name@domain.com', :password => 'pass'})
 
 == License
 
