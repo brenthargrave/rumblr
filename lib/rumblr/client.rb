@@ -37,8 +37,13 @@ module Rumblr
       
       request_url_host = URI.parse(options[:url]).host
       complete_request(request,host=request_url_host) do |response_body|
-        parser, parser.string = XML::Parser.new, response_body
+        parser = XML::Parser.string(response_body)
         doc = parser.parse
+        # parse and map tumblelog
+        tumblelog_element = doc.find_first('//tumblr/tumblelog')
+        tumblelog_attrs = cleanup_hash(tumblelog_element.attributes.to_h)
+        tumblelog_attrs.merge!(:url => options[:url])
+        tumblelog = Tumblelog.new(tumblelog_attrs)
         # parse and map posts
         posts = doc.find('//tumblr/posts/post').inject([]) do |array, element|
           post_attrs = cleanup_hash(element.attributes.to_h)
@@ -61,11 +66,6 @@ module Rumblr
           array << post
           array
         end
-        # parse and map tumblelog
-        tumblelog_element = doc.find_first('//tumblr/tumblelog')
-        tumblelog_attrs = cleanup_hash(tumblelog_element.attributes.to_h)
-        tumblelog_attrs.merge!(:url => options[:url])
-        tumblelog = Tumblelog.new(tumblelog_attrs)
       end
       return tumblelog, posts
     end
@@ -116,7 +116,7 @@ module Rumblr
     private
     
     def parse_user_attributes_from(response_body)
-      parser, parser.string = XML::Parser.new, response_body
+      parser = XML::Parser.string response_body
       doc = parser.parse
       tumblelogs = doc.find('//tumblr/tumblelog').inject([]) do |array, element|
         tumblelog_attrs = cleanup_hash(element.attributes.to_h)

@@ -61,7 +61,7 @@ module Rumblr
     
     it 'should provide a primary tumblelog' do
       primary = @user.primary_tumblelog
-      primary.primary?.should be_true
+      primary.is_primary.should == 'yes'
     end
     
   end
