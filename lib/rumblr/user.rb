@@ -8,7 +8,7 @@ module Rumblr
     end
     
     def primary_tumblelog
-      self.tumblelogs.find { |log| log.is_primary }
+      self.tumblelogs.find { |log| log.primary? }
     end
     
     class << self
