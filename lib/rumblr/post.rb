@@ -15,6 +15,7 @@ module Rumblr
     }
     
     attr_reader :id, :url, :type, :unix_timestamp, :date_gmt, :date, :tags, :private
+    attr_accessor :tumblelog
     
     def initialize(attrs={})
       @private = false
@@ -36,7 +37,7 @@ module Rumblr
   end
   
   class RegularPost < Post
-    attr_reader :title, :body
+    attr_accessor :title, :body
     
     def attribute_hash
       super.merge(:title => title, :body => body)
@@ -45,7 +46,7 @@ module Rumblr
   end
   
   class PhotoPost < Post
-    attr_reader :source, :data, :caption, :click_through_url
+    attr_accessor :source, :data, :caption, :click_through_url
     
     def attribute_hash
       super.merge(:source => source, :data => data, :caption => caption, :click_through_url => click_through_url)
@@ -54,7 +55,7 @@ module Rumblr
   end
   
   class QuotePost < Post
-    attr_reader :quote, :source
+    attr_accessor :quote, :source
     
     def attribute_hash
       super.merge(:quote => quote, :source => source)
@@ -63,7 +64,7 @@ module Rumblr
   end
   
   class LinkPost < Post
-    attr_reader :name, :url, :description
+    attr_accessor :name, :url, :description
     
     def attribute_hash
       super.merge(:name => name, :url => url, :description => description)
@@ -72,7 +73,7 @@ module Rumblr
   end
   
   class ConversationPost < Post
-    attr_reader :title, :conversation
+    attr_accessor :title, :conversation
     
     def attribute_hash
       super.merge(:title => title, :conversation => conversation)
@@ -81,7 +82,7 @@ module Rumblr
   end
   
   class VideoPost < Post
-    attr_reader :embed, :data, :title, :caption
+    attr_accessor :embed, :data, :title, :caption
     
     def attribute_hash
       super.merge(:embed => embed, :data => data, :title => title, :caption => caption)
@@ -90,7 +91,7 @@ module Rumblr
   end
   
   class AudioPost < Post
-    attr_reader :data, :caption
+    attr_accessor :data, :caption
     
     def attribute_hash
       super.merge(:data => data, :caption => caption)

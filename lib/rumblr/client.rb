@@ -21,7 +21,9 @@ module Rumblr
         user_attributes = parse_user_attributes_from(response_body)
         user_attributes.merge!(user_credentials)
       end
-      User.new(user_attributes)
+      user = User.new(user_attributes)
+      user.tumblelogs.each{ |tumblelog| tumblelog.user = user }
+      user
     end
     
     def read(options={})
@@ -55,6 +57,7 @@ module Rumblr
           klass = Rumblr.const_get(Post::TYPES[post_attrs[:type]])
           raise 'unknown post type' unless klass
           post = klass.new(post_attrs)
+          post.tumblelog = tumblelog
           array << post
           array
         end

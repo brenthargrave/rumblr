@@ -35,5 +35,30 @@ module Rumblr
     end
     
   end
-  
+
+  describe Tumblelog, 'user' do
+    
+    describe 'logged in' do
+
+      before(:each) do
+        mock_successful(:authenticate)
+        @user = User.login(:email => 'valid_email', :password => 'valid_password')
+      end
+
+      it 'should have a user associated with it' do
+        @user.primary_tumblelog.user.should_not be_nil
+      end
+   
+    end
+
+    describe 'not logged in' do
+      
+      it 'should not have a user if anonymous read' do
+        mock_successful(:anonymous_read)
+        Tumblelog.find_by_url('valid_url').user.should be_nil
+      end
+      
+    end
+  end
+
 end

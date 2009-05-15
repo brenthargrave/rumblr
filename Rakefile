@@ -10,7 +10,7 @@ begin
     s.email = "brent.hargrave@gmail.com"
     s.homepage = "http://github.com/jamescallmebrent/rumblr"
     s.description = summary
-    s.authors = ["Brent Hargrave"]
+    s.authors = ["Brent Hargrave", "Benny Wong"]
     s.add_dependency('libxml-ruby', '>= 0.8.3')
   end
 rescue LoadError

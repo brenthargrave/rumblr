@@ -5,7 +5,7 @@ module Rumblr
   describe Post, 'instances' do
     
     it 'should have attributes shared by every Post' do
-      Post.new.should respond_to(:id, :url, :type, :unix_timestamp, :date_gmt, :date, :tags, :private)
+      Post.new.should respond_to(:id, :url, :type, :unix_timestamp, :date_gmt, :date, :tags, :private, :tumblelog)
     end
     
     it 'private attribute should default to false' do
@@ -23,7 +23,7 @@ module Rumblr
     it 'should provide a hash of attributes and values for API' do
       Post.new.should respond_to(:attribute_hash)
     end
-    
+
   end
   
 end
