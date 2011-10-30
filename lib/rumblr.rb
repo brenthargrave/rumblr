@@ -5,7 +5,7 @@ module Rumblr
   class AuthorizationError < Exception; end
   class RequestError < Exception; end
   class ServerError < Exception; end
-  
+
   class << self
     attr_accessor :api_url
   end

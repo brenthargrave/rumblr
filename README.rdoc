@@ -33,18 +33,18 @@ Go to http://tumblr.com and register for a new account if you don't already have
 
   require 'rumblr'
   include Rumblr
-  
+
   user = User.login({:email => 'name@domain.com', :password => 'pass'})
-  
+
   user.tumblelogs.each do |log|
     puts log.name  # 'the tumblelogger'
     puts log.type  # 'public'
     puts log.url   # 'http://tumblelogger.tumblr.com/'
     puts
   end
-  
+
   tumblelog = user.primary_tumblelog
-  
+
   tumblelog.posts.each do |post|
     puts post.type  # 'quote'
     puts post.url   # 'http://tumblelogger.tumblr.com/post/12345/my-first-tumblr-post'

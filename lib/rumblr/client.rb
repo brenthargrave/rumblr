@@ -1,21 +1,21 @@
 module Rumblr
-  
+
   class Client
     include Singleton
-    
+
     # The default set of headers for each request.
     DEFAULT_HEADER = {
         'User-Agent'  => 'Rumblr',
         'Accept'      => 'application/xml'
     }
-    
+
     def authenticate(email,password)
       raise ArgumentError unless (email && password)
       user_credentials = { :email => email, :password => password }
       uri = URI::HTTP.build({:path => '/api/authenticate'})
       request = Net::HTTP::Post.new(uri.request_uri, DEFAULT_HEADER)
       request.set_form_data(user_credentials)
-      
+
       user_attributes = nil
       complete_request(request) do |response_body|
         user_attributes = parse_user_attributes_from(response_body)
@@ -25,16 +25,16 @@ module Rumblr
       user.tumblelogs.each{ |tumblelog| tumblelog.user = user }
       user
     end
-    
+
     def read(options={})
       tumblelog, posts = nil, [] # initialize the return targets
-      
+
       uri = URI::HTTP.build({:path => '/api/read'})
       request = Net::HTTP::Post.new(uri.request_uri, DEFAULT_HEADER)
       request.set_form_data(options)
-      
+
       raise(ArgumentError) unless (options && options[:url] && !options[:url].empty?)
-      
+
       request_url_host = URI.parse(options[:url]).host
       complete_request(request,host=request_url_host) do |response_body|
         parser = XML::Parser.string(response_body)
@@ -69,7 +69,7 @@ module Rumblr
       end
       return tumblelog, posts
     end
-    
+
     def write(post, creds)
       raise(ArgumentError) unless post && post.is_a?(Post)
       raise(ArgumentError) unless creds
@@ -79,17 +79,17 @@ module Rumblr
       request_url_host = URI.parse(uri.request_uri).host
       complete_request(request)
     end
-    
-    
+
+
     protected
-    
+
     # Starts and completes the given request. Returns or yields the response body.
     def complete_request(request, host = URI.parse(Rumblr.api_url).host)
       http = Net::HTTP.new(host)
       # Set to debug http output.
       # http.set_debug_output $stderr
       response = http.start { |http| http.request(request) }
-      
+
       case response
       when Net::HTTPSuccess           then  yield response.body if block_given?
       when Net::HTTPBadRequest        then  raise Rumblr::RequestError, parse_error_message(response)
@@ -99,22 +99,22 @@ module Rumblr
       when Net::HTTPServerError       then  raise Rumblr::ServerError, connection_error_message
       else                                  raise "Received an unexpected HTTP response: #{response}"
       end
-      
+
       response.body
     end
-    
+
     # Extracts the error message from the response for the exception.
     def parse_error_message(response)
       response.body
     end
-    
+
     def connection_error_message
       "There was a problem connecting to Tumblr"
     end
-    
-    
+
+
     private
-    
+
     def parse_user_attributes_from(response_body)
       parser = XML::Parser.string response_body
       doc = parser.parse
@@ -127,7 +127,7 @@ module Rumblr
       user_attributes = cleanup_hash(raw_user_attributes)
       user_attributes.merge!(:tumblelogs => tumblelogs)
     end
-    
+
     def cleanup_hash(attrs={})
       clean_attrs = attrs.inject({}) do |hash,(key,value)|
         mapped_key = key.gsub(/-/,'_').to_sym
@@ -140,7 +140,7 @@ module Rumblr
         hash
       end
     end
-  
+
   end
 
 end
