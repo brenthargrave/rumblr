@@ -4,13 +4,13 @@ require 'spec'
 require 'rumblr'
 
 def mock_successful(request)
-  responses_to = { 
-    :authenticate         => successful_authenticate_xml, 
+  responses_to = {
+    :authenticate         => successful_authenticate_xml,
     :anonymous_read       => successful_anonymous_read_xml,
     :authenticated_read   => successful_authenticated_read_xml,
-    :authenticated_write  => successful_authenticated_write_xml 
+    :authenticated_write  => successful_authenticated_write_xml
   }
-  
+
   @client = Rumblr::Client.instance
   if request == :authenticated_write
     @client.stub!(:complete_request).and_return(responses_to[request])
